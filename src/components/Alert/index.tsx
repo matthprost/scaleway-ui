@@ -19,6 +19,7 @@ const alertStyles = ({
 
   return css`
     background-color: ${sentiment.background};
+    color: ${sentiment.text};
   `
 }
 
