@@ -13,7 +13,6 @@ jobs:
       matrix:
         node: ['18']
     runs-on: ubuntu-20.04
-    needs: [lint, test]
     steps:
       - uses: actions/checkout@v3.2.0
       - uses: pnpm/action-setup@v2.2.4
@@ -37,7 +36,7 @@ jobs:
         with:
           fetch-depth: '0'
           persist-credentials: false
-      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - run: git fetch --tags -f
       - uses: pnpm/action-setup@v2.2.4
       - name: Use Node.js
         uses: actions/setup-node@v3.5.1
@@ -47,6 +46,4 @@ jobs:
       - run: pnpm run build
       - run: pnpm semantic-release
         env:
-          HUSKY: 0
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
